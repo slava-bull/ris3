@@ -1,0 +1,54 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.3'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'com.intershop.gradle.jaxb' version '4.3.0'
+    id 'java'
+}
+
+group = 'com.slava_bull'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    //<editor-fold desc="jaxb">
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'javax.activation:activation:1.1'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.0'
+    jaxb group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+    jaxb group: 'com.sun.xml.bind', name: 'jaxb-core', version: '2.2.11'
+    jaxb group: 'com.sun.xml.bind', name: 'jaxb-xjc', version: '2.2.11'
+    jaxb group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.2.11'
+    jaxb group: 'javax.activation', name: 'activation', version: '1.1.1'
+    //</editor-fold>
+
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'org.postgresql:postgresql'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+jaxb {
+    javaGen {
+        posConfig {
+            packageName = 'com.slava_bull'
+            schema = file('src/main/resources/OSMSchema.xsd')
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
