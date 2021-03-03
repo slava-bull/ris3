@@ -9,7 +9,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-@Table(name = "nodes")
+@Table(name = "nodes", indexes = @Index(name = "coord", columnList = "lat, lon"))
 public class Node extends AbstractEntity {
     @Column(name = "lat")
     private double lat;
