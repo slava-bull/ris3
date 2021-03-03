@@ -1,27 +1,25 @@
 package com.slava_bull.ris.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+import javax.persistence.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class Node {
-    private long id;
+@Entity
+@Table(name = "nodes")
+public class Node extends AbstractEntity {
+    @Column(name = "lat")
     private double lat;
-    private double lon;
-    private String user;
-    private List<Tag> tags;
 
-    public static Node fromXml(com.slava_bull.Node nodeXml) {
-        Node node = new Node();
-        node.id = nodeXml.getId().longValue();
-        node.lat = nodeXml.getLat();
-        node.lon = nodeXml.getLon();
-        node.user = nodeXml.getUser();
-        node.tags = nodeXml.getTag().stream()
-                .map(t -> Tag.fromXml(t, node.id))
-                .collect(Collectors.toList());
-        return node;
-    }
+    @Column(name = "lon")
+    private double lon;
+
+    @Column(name = "username")
+    private String user;
+
+    @OneToMany(mappedBy = "node")
+    private List<Tag> tags;
 }

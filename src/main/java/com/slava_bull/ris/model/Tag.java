@@ -1,24 +1,23 @@
 package com.slava_bull.ris.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.persistence.*;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class Tag {
-    private Long nodeId;
+@Entity
+@Table(name = "tags")
+public class Tag extends AbstractEntity{
+
+    @ManyToOne
+    @JoinColumn(name = "node_id")
+    private Node node;
+
+    @Column(name = "key")
     private String key;
+
+    @Column(name = "value")
     private String value;
-
-    private Tag() {
-    }
-
-    public static Tag fromXml(com.slava_bull.Tag tagXml, Long nodeId) {
-        Tag tag = new Tag();
-        tag.nodeId = nodeId;
-        tag.key = tagXml.getK();
-        tag.value = tagXml.getV();
-        return tag;
-    }
 }
