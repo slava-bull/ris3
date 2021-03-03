@@ -2,6 +2,7 @@ package com.slava_bull.ris.rest;
 
 import com.slava_bull.ris.common.rest.impl.CommonCrudController;
 import com.slava_bull.ris.dto.EditNodeDto;
+import com.slava_bull.ris.dto.NearPointDto;
 import com.slava_bull.ris.dto.SaveNodeDto;
 import com.slava_bull.ris.jaxb.NodeJaxbParser;
 import com.slava_bull.ris.mapper.EditNodeDtoMapper;
@@ -10,9 +11,7 @@ import com.slava_bull.ris.mapper.SaveNodeDtoMapper;
 import com.slava_bull.ris.model.Node;
 import com.slava_bull.ris.service.NodeService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +32,11 @@ public class NodeController extends CommonCrudController<
     public NodeController(NodeService service, SaveNodeDtoMapper saveMapper, EditNodeDtoMapper editMapper, NodeXmlMapper nodeXmlMapper) {
         super(service, saveMapper, editMapper);
         this.nodeXmlMapper = nodeXmlMapper;
+    }
+
+    @PostMapping("/near")
+    public List<Node> getNear(@RequestBody NearPointDto nearPointDto){
+        return service.getNear(nearPointDto);
     }
 
     @PostMapping("/init")
