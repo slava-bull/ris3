@@ -18,7 +18,7 @@ public class CommonCrudController<
         Service extends CrudService<Entity>>
         implements CrudController<Entity, SaveDto, EditDto> {
 
-    private final Service service;
+    protected final Service service;
     protected final SaveDtoMapper saveMapper;
     protected final EditDtoMapper editMapper;
 
